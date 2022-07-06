@@ -18,7 +18,6 @@ engine = create_engine(url)
 connect = engine.connect()
 query = "SELECT id, name, prices_amountmax, prices_amountmin, prices_dateseen, prices_issale, prices_merchant, prices_condition FROM price_data"
 df = pd.read_sql(query, con=connect)
-df.to_csv('cleaned.csv')
 
 # Adding animated graphic
 def load_lottieurl(url: str):
