@@ -10,12 +10,12 @@ Users of our app are able to select their product from a dropdown menu, enter a 
 ![Predicted_Page](Resources/predicted_page.jpg)
 
 ## Tableau Dashboard
-![Tableau_Page](Resources/tableau.jpg)
 We also included static visualizations capturing the full dataset in order to tell the story behind our unfiltered data. 
 - A stacked bar chart shows the distribution of sales discounts over time. We can see that sales discounts appear most frequently in the summer, and are less prevalent earlier in the year.  
 - The Bubble chart shows the distribution of brands in our dataset, with Sony, Apple and Samsung appearing to be the biggest players!
+![Tableau_Page](Resources/tableau.jpg)
 
-## Data - Extract, Transform & Load
+## Data - Extract, Transform & Load (ETL)
 ### Extract: 
 We obtained [Electronic Products and Pricing Data](https://www.kaggle.com/datasets/datafiniti/electronic-products-prices?resource=download) from [kaggle.com](kaggle.com) which includes each individual product id (`id`), minimum selling prices (`prices_amountmin`) observed from various online merchants (`prices_merchant`) as well as the dates that those prices were observed (`prices_dateseen`), and whether the prices observed were "sale" prices (`prices_issale`). 
 
@@ -66,6 +66,6 @@ On the Tableau Dashboard page, we use `streamlit.components.v1` in order to open
 ## Technology
 - Data Cleaning: Pandas, Numpy, and re
 - Database: PostgreSQL RDS hosted on AWS
-- Machine Learning: Sklearn library
+- Machine Learning: Sklearn, Imblearn and Joblib
 - Code Editors: Jupyter Notebook / Google Colab / VScode
 - Dashboard: Streamlit, Lottie, Matplotlib, Tableau, HTML
