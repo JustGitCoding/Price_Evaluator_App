@@ -35,6 +35,7 @@ def show_prediction_page(df):
     
     return item_name, item_price, retailer, condition, submitted
 
+# Function to Run ML model and show data, visualizations & prediction based on user input
 def show_predicted_page(df, item_name, item_price, retailer, condition, submitted):
     # Runs Machine Learning Model each time input form is 'submitted' by user
     if submitted:     

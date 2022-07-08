@@ -8,11 +8,12 @@ from graph_page import show_table_page
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
 
+# Use Streamlit's 'wide' layout
 st.set_page_config(layout ="wide")
 
 # Connect to RDS Database to query price_data table and store as pandas dataframe
-from config import password
-# password = st.secrets['db_pw']
+# from config import password
+password = st.secrets['db_pw']
 url = f"postgresql://postgres:{password}@final-project.crnuve3iih8x.us-east-1.rds.amazonaws.com:5432/postgres"
 engine = create_engine(url)
 connect = engine.connect()

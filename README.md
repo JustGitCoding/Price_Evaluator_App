@@ -1,40 +1,37 @@
 # The Price Evaluator App
-## Description 
-An app hosted on a streamlit website that, given sufficient retailer data, is able to take a product and price given to it by a user and determine whether or not that is a good price to buy at. If not, the app will give a list of similair products at different retailers with better times and prices to buy.
-## Reason to Use
-There’s always a lot of ‘head knowledge’ of the best times to buy a certain item (ie always Black Friday) or from where to buy it (according to my dad Best Buy is always the best) but there’s a lack of actual hard evidence for this. We wanted to get rid of the prophesizing and create a model to predict whether you’re getting a good deal on something, or whether you should wait a couple more weeks for a sale.
-## How to Use
-<insert image of the selection table>
-The application itself is incredibly simple to use. A user simply needs to begin typing the product they are interested in purchasing into the search box and select it from the dropdown menu. After that, enter the price you found the item at into the adjacent 'price' box and select whether or not you would like a new or used item. A text field will then appear either telling you to 'Buy' in green letters for a good deal, or in red letters tell you to think before you buy as there may be better options. To give you an idea of these options, the table below the search fields will automatically generate with the same product from different retailers and the price those retailers are selling it for. This way you can know you are getting your new iPhone at a competitive price, and not simply what Apple.com is telling you they believe it should be!
-  <insert generated table>
-Finally the website also includes several tables that are generated below the interactive table and in the 'data visualization' tab. Below the interactive table, these graphs are designed to show you who the biggest retailers are for your product as well as the products price over time. This is to allow you to pick both the most reputable retailers with highest supply and to tailor your shopping decisions for when the item is cheapest. The 'data visualization' section has several graphics generated within Tableau that are static, but again feature the biggest brands, retailers, and average price per retailer. This is again to help inform users the most reputable and cheapest purchase options as well as the representation of certain brands within the dataset.
-    
-For the dataset, it is currently populated with over 12k entries from an Electronics Product dataset found on Kaggle (more details below). You are free to use the code provided here and substitute your own dataset, but it will need to be cleaned and columns matched to our naming schema or the code edited to reflect your desires.
+### A Streamlit app that not only predicts whether you're getting a discounted price, but also gives a list of deals offered at other top retailers.
+There is always a lot of "head knowledge" regarding the best times to buy a certain item (i.e. always wait till Black Friday) or from where to buy it (according to my dad Best Buy is always the best) but there’s rarely any hard evidence to back these claims. The Price Evaluator app uses a machine learning model to predict whether you’re getting a good deal on something, or whether you should shop around some more or wait for a sale.
 
-## Communication Methods
-- We will meet every Tuesday/Thursday starting at 6:00 to review changes and to go over large problems.
-- Team members will update each other daily on Slack
-- If assistance is needed, impropmtu meetings will be scheduled using Slack. If not all members can be present in these meetings that is acceptable.
-- All team members have each others email and phone number for contact purposes as well in case of issues
-- Individual member updates will be stored in their corresponding Git branch (named for each member). Review by two memebers is needed to push an update to main.
+['Click here to visit our site']()
+
+## The Prediction Page
+![Prediction_Page](Resources/prediction_page.jpg)
+The application itself is incredibly simple to use. A user simply needs to begin typing the product they are interested in purchasing into the search box and select it from the dropdown menu. After that, enter the price into the adjacent 'Price' box and select whether it is 'New' or 'Used'. Our Machine Learning model will immediately make a prediction and a text box will appear either telling you that it 'Seems like a Good Deal!' in green letters, or that the 'Price may not be Discounted.' in yellow letters, prompting users to consider shopping around more. In either case, the app will also provide a table with all of the observed prices for the selected product, as well as a pie chart with the retailer distribution on this product, and a line graph showing the historical trend in prices. 
+![Predicted_Page](Resources/predicted_page.jpg)
+
+## Tableau Dashboard
+![Tableau_Page](Resources/tableau.jpg)
+We also included static visualizations capturing the full dataset in order to tell the story behind our unfiltered data. 
+- A stacked bar chart shows the distribution of sales discounts over time; we can see that sales discounts appear most frequently in May, but are least prevalent in Febrary.  
+- The Bubble chart shows the distribution of brands in our data set. Sony, Apple and Samsung are pretty big players!
+- The Box and Whiskers plot looks at how skewed the pricing data is. In order to evaluate this we chose the top 10 items with the most pricing data associated with them. We can see that Walmart and Bestbuy's average price is quite a bit lower than the other merchants'. BestBuy and Walmart also have the largest spread of pricing within their own data sets, while Amazon remains fairly tight around the mean. For this plot, outliers were thrown out; we are only interested in the skew and shape of normally distributed data.
 
 ## Data - Extract, Transform & Load
-Extract: 
-- We obtained [Electronic Products and Pricing Data](https://www.kaggle.com/datasets/datafiniti/electronic-products-prices?resource=download) from [kaggle.com](kaggle.com) which includes minimum selling prices (`prices_amountmin`) observed from various online merchants (`prices_merchant`) as well as the dates that those prices were observed (`prices_dateseen`), and whether the prices observed were "sale" prices (`prices_issale`) for each individual product id (`id`). 
+### Extract: 
+We obtained [Electronic Products and Pricing Data](https://www.kaggle.com/datasets/datafiniti/electronic-products-prices?resource=download) from [kaggle.com](kaggle.com) which includes minimum selling prices (`prices_amountmin`) observed from various online merchants (`prices_merchant`) as well as the dates that those prices were observed (`prices_dateseen`), and whether the prices observed were "sale" prices (`prices_issale`) for each individual product id (`id`). 
 
+### Transform:
 In order to clean the data, we had to perform several steps
-- Transform the data:
-    1. Replace all periods in titles with underscores to follow best SQL practices
-    2. Updating all date columns to be in the correct datetime format
-    3. Deciding which date columns to use; it was determined that the most recent datetime in the "date seen" column was the most relevant data given what our website's overall goal is. To extract these dates, we split this comma-separated column into individual columns and dropped all but the most recent column. 
-    4. Using only USD for our pricing data; all other currencies were dropped
-    5. Updating the prices_condition column to read as just one of two values, and cleaned the data so that all values were either New or Used. We assumed that all blank cells were New.
-    6. Recombine the prices_merchant column so that we have five categories: walmart, bestbuy, amazon, bhpvideo, and "other". This column initially was a mess, and included mispellings, odd naming conventions, and a host of other issues, which resulted in over 1,500 unique names. We used regex strings to sort the data into the five categories mentioned, with no dramatic loss of data. Data that contained less than 300 data points was lumped together into an "other" category. 
+1. Replaced all periods in column names with underscores.
+2. Updating all date columns to be in datetime format.
+    - `prices_dateseen` - This column originally included all dates that the price was observed. We decided to only keep the most recent date as it represented the most relevant information.
+    - To extract these dates, we split the comma-separated column into individual columns and dropped all but the most recent column. 
+4. We only kept data that was denomiated in USD; all other currencies were dropped.
+5. `prices_condition` - Using RegEx, we split the data between 'New' vs 'Used' (including 'pre-owned', 'refurbished', etc). We assumed that all blanks were 'New'.
+6. `prices_merchant` - This column initially was a mess, and included mispellings, odd naming conventions, and a host of other issues, which resulted in over 1,500 unique names. Using RegEx, we split the data between the 4 most commonly observed retailers (Walmart, Bestbuy, Amazon, bhphotovideo) and binned the remaining retailers into an 'Other' category.
 
-    Load:
-    - We decided to use Amazon AWS linked through PGAdmin for our database. PGAdmin allows us to run administrative actions on the database, while AWS hosts the database live. For our schema, we had PGAdmin assign a unique number to each row of data to act as our primay key, since there were no native unique values in the data set. In order to ensure that everyone always had an updated version of hte database (data cleaning was an ongoing process!), we connected the database to our Jupyter notebook files directly by creating an engine using sqalqchemy; this way, whenever a change was made we could all pull the same database into our systems as needed. The password to the database was entered in a separate line of code for security. 
-
-
+### Load:
+We decided to use Amazon Web Services (AWS) to host our PostgreSQL RDS. In order to ensure that everyone always had the most up-to-date version version of the data, each time anyone performed any data cleaning in our `Data_ETL.ipynb` file (data cleaning was an ongoing process!), we used the `sqlalchemy` library's `create_engine` function to connect to our database, drop the existing data, and replace it with the newest & cleanest version of the data.
 
 ## Machine Learning
 ### Feature Selection & Target:
@@ -59,35 +56,17 @@ Using our preprocessed dataset, we used a `for` loop to test a number of machine
 Based on these results, we found that the `RandomForestClassifier` provided the highest model accuracy score (`model.score()`). We then used the `joblib` library again to save the trained model for future use in our Price Evaluator App.
 
 ## Price Evaluator App
-We used Streamlit.io to create our web application, which prompts users for a product name, price, merchant, and condition ('New' or 'Used'). Our app then feeds the user's input into our saved Machine Learning Model, and predicts whether the sale conditions are discounted.
-We have 3 pages in our web application:
-- Graph page which represents our Tableau Dashboard.
-- Prediction page which allows the user to select the product to be predicted, and contains our input and selec boxes.
-- Predicted page which appears after submitting the submit button and contains our interactive graphs and predicted results.<br>
+We used Streamlit.io to create and deploy our web application. At the top of our app, we use a `streamlit_option_menu` to allow users to navigate between the 'Predictions' page (default) vs the 'Tableau Dashboard' page. 
 
-our web application is connected with our AWS database using sqlalchemy create_engine feature, using option_menu feature in streamlit we created multiple pages, lottie is used for animated graphic.<br>
-st.spinner is used to add a spinner, after submitting the submit button the spinner is going to load for a second and then our predicted page will show up, if predicted price is lower then user input price, a green success messages (Seems like a Good Deal!) and balloons will pop up on our screen, which is created using st.success and st.balloons.
+On the Prediction page, we use Streamlit's built in `st.form` function to generate a user form which prompts the user for a product name, price, merchant, and condition ('New' or 'Used') and saves them as variables upon the user clicking the "Submit" button. Our app then imports `ML_Evaluator.py` which has a function reads the input variables, loads our Machine Learning model (including data encoders and scaler), and predicts whether the sale conditions are discounted. Based on the output of this function, we use Streamlit's built in `st.success` and `st.warning` functions to generate either a green 'success' box, indicating that the input 'Seems like a Good Deal!' or a yellow 'warning' box, indicating that the input 'May not be Discounted' (we also added `st.balloons` when deals were predicted to be discounted.) 
 
-We have two interactive charts:
-1) Pie chart which shows Retailer Distribution.
-2) Altair chart which shows Price History.
-> <img width="1440" alt="interactive charts" src="https://user-images.githubusercontent.com/97934695/177893946-2a6fd88c-48c1-4993-9c44-f9bad3709794.png">
+Upon loading the web application, Streamlit also connects to our AWS database using the `sqlalchemy` library's `create_engine` function (database password stored / retrieved using Streamlit's `st.secrets`), and loads the data as a Pandas dataframe. Using the `.loc` function, we are able to disply only the data that is relevant to the user. We further use both the `matplotlib` and `altair` libraries to generate interactive visualizations based on this filtered dataframe.
 
-
-## Visualizations Dashboard
-Using Tableau, we also built static visualizations capturing the full dataset. 
-- A stacked bar chart shows the distribution of sales over time; we can see that BestBuy has the most frequent sales in May, but almost none in January or Febrary.  
-- Bubble chart shows the distribution of brands in our data set, using a count of the unique values int he ID column. Sony and Apple are pretty big players!
-- Box and Whiskers: We used this to look at how skewed the pricing data is. In order to evaluate this we chose the top 10 items with the most pricing data associated with them. We can see that Walmart and Bestbuy's average price is quite a bit lower than the other merchants'. BestBuy and Walmart also have the largest spread of pricing within their own data sets, while Amazon remains fairly tight around its average cost line. For this plot, outliers were thrown out; we are only interested in the skew and shape of normally distributed data. This has a pronounced affect on the look and usability of our graphs, demonstrated below with outliers (right) and without (left)
-
-![Here it is without outliers:](Resources/boxplot.jpg)
-![Here it is with outliers:](Resources/boxplot_outliers.jpg)
-
-
+On the Tableau Dashboard page, we use `streamlit.components.v1` in order to open our Tableau Public's html embed code, and display our dashboard as a `component` on our website.
 
 ## Technology
-•	Data Cleaning: Pandas, Numpy, and re
-•	Database: PostgreSQL RDS hosted on AWS
-•	Machine Learning: Sklearn library
-•	Code Editors: Jupyter Notebook / Google Colab / VScode
-•	Dashboard: Streamlit, Lottie, Matplotlib, Tableau, HTML
+- Data Cleaning: Pandas, Numpy, and re
+- Database: PostgreSQL RDS hosted on AWS
+- Machine Learning: Sklearn library
+- Code Editors: Jupyter Notebook / Google Colab / VScode
+- Dashboard: Streamlit, Lottie, Matplotlib, Tableau, HTML
