@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import time
 from ML_Evaluator import evaluate_price
 
-
 # Function to generate predictions page
 def show_prediction_page(df):
     st.title("Price Evaluator")
@@ -64,7 +63,7 @@ def show_predicted_page(df, item_name, item_price, retailer, condition, submitte
         st.write(display_df.style.format({"Price": "{:.2f}"}))
     
         # Generate columns of equal width for interactive visualizations
-        g1, g2 = st.columns((5,5))
+        g1, g2 = st.columns((3.5,6.5))
 
         # Graph 1 - Retailer Distribution
         with g1:
@@ -72,7 +71,7 @@ def show_predicted_page(df, item_name, item_price, retailer, condition, submitte
             output_df = df.loc[df["name"] == item_name]
             labels = list(output_df['prices_merchant'].unique())
             data = list(output_df.groupby(['prices_merchant']).count()['id'])
-            fig, ax = plt.subplots(figsize=(5,5))
+            fig, ax = plt.subplots(figsize=(4,4))
             wedges, texts, autotexts = ax.pie(data, labels=labels, autopct='%1.0f%%', shadow=True, startangle=180, 
                     textprops={'color':'lightgrey', 'fontsize': 14, 'weight': 'bold'})
             ax.set_position([0,3,1,1])
@@ -92,8 +91,3 @@ def show_predicted_page(df, item_name, item_price, retailer, condition, submitte
                             use_container_width=True)
 
 
-
-
-
-
-    
