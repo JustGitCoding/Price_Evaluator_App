@@ -13,10 +13,10 @@ st.set_page_config(layout ="wide")
 
 # Connect to RDS Database to query price_data table and store as pandas dataframe
 password = st.secrets['db_pw']
-url = f"postgresql://postgres:{password}@final-project.crnuve3iih8x.us-east-1.rds.amazonaws.com:5432/postgres"
+url = f"postgresql://postgres:{password}@pricingdb.chf4tnx9zblt.us-west-1.rds.amazonaws.com:5432/kaggle_pricing_db"
 engine = create_engine(url)
 connect = engine.connect()
-query = "SELECT id, name, prices_amountmax, prices_amountmin, prices_dateseen, prices_issale, prices_merchant, prices_condition FROM price_data"
+query = "SELECT * FROM price_data"
 df = pd.read_sql(query, con=connect)
 
 # Adding animated graphic
