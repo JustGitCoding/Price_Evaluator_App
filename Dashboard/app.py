@@ -12,7 +12,6 @@ from streamlit_lottie import st_lottie
 st.set_page_config(layout ="wide")
 
 # Connect to RDS Database to query price_data table and store as pandas dataframe
-# from config import password
 password = st.secrets['db_pw']
 url = f"postgresql://postgres:{password}@final-project.crnuve3iih8x.us-east-1.rds.amazonaws.com:5432/postgres"
 engine = create_engine(url)

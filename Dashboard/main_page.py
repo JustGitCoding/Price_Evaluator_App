@@ -3,7 +3,6 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 import matplotlib.pyplot as plt
-import time
 from ML_Evaluator import evaluate_price
 
 # Function to generate predictions page
@@ -38,11 +37,7 @@ def show_prediction_page(df):
 # Function to Run ML model and show data, visualizations & prediction based on user input
 def show_predicted_page(df, item_name, item_price, retailer, condition, submitted):
     # Runs Machine Learning Model each time input form is 'submitted' by user
-    if submitted:     
-        # Adds spinner after clicking the button
-        with st.spinner("Searching for your product"):
-            time.sleep(1)
-
+    if submitted:
         # Filter df for item_name in order to find corresponding product_id
         product_id = df['id'].loc[df['name'] == item_name].iloc[0]
         
