@@ -2,7 +2,7 @@
 ### A Streamlit app that not only predicts whether you're getting a discounted price, but also gives a list of deals offered at other top retailers.
 People always wants to know the best times to buy something (i.e. should I wait until Black Friday) or whether they're getting a 'deal'. Our Price Evaluator application uses machine learning to help you make these determinations.
 
-Try the App here: https://justgitcoding-price-evaluator-app-dashboardapp-2wl09m.streamlitapp.com/
+Try the App here: https://justgitcoding-price-evaluator-app-dashboardapp-lc97rd.streamlitapp.com/
 
 ## The Prediction Page
 ![Prediction_Page](Resources/prediction_page.jpg)
