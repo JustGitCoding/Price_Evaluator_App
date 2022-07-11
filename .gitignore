@@ -128,8 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+.DS_Store
 DatafinitiElectronicsProductsPricingData.csv
 cleaned.csv
-data_to_delete.csv
-.DS_Store
 config.py
+
