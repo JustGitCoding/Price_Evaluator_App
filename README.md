@@ -3,7 +3,7 @@
 
 People always wants to know the best times to buy something (i.e. should I wait until Black Friday) or whether they're getting a 'deal'. Our Price Evaluator application uses machine learning to help you make these determinations.
 
-Check out our App [HERE](https://justgitcoding-price-evaluator-app-dashboardapp-lc97rd.streamlitapp.com/)!
+Check it out [HERE](https://justgitcoding-price-evaluator-app-dashboardapp-lc97rd.streamlitapp.com/)!
 
 ## The Prediction Page
 ![Prediction_Page](Resources/prediction_page.jpg)
